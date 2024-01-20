@@ -10,16 +10,22 @@ func main() {
 
 	// filmNames := []string{}
 
-	fmt.Print("Instantiating...\n")
+	fmt.Print("Instantiating...\n\n")
+
+	// fmt.Print("Favorites:\n")
 	// Instantiate default collector
 	c := colly.NewCollector(
 		colly.AllowedDomains("letterboxd.com"),
 	)
 
-	c.OnHTML(".image", func(e *colly.HTMLElement) {
+	c.OnHTML("#favourites", func(e *colly.HTMLElement) {
 		// film := e.Attr("data-film-name")
 		// filmNames = append(filmNames, film)
-		fmt.Println(e.Attr("alt"))
+
+		for _, film := range e.ChildAttrs("ul > li > div.poster > img", "alt") {
+			fmt.Println("\t" + film)
+		}
+
 	})
 
 	// c.OnScraped(func(r *colly.Response) {
