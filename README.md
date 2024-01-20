@@ -6,4 +6,4 @@ Essentially a self taught "course" I made for myself to master Golang. 9 project
 
 Create a Web Scraper that displays your top 4 favorite films and 4 most recent films (with your rating) from your Letterboxd account. Most of this project was straight It just involved documentation reading to used to Colly and educating myself on how query selection works.
 
-<img src="/01_WebScraper/01_webscraper.png">
+<img src="/01_webscraper.png">
