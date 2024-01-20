@@ -40,7 +40,7 @@ func main() {
 
 	})
 
-	c.Visit("https://letterboxd.com/filmarchive/")
+	c.Visit("https://letterboxd.com/feauv/")
 
 }
 
