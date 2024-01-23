@@ -1,12 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
 	"log"
 	"net/http"
-	"net/http/httputil"
 	"os"
 	"strconv"
 )
@@ -19,12 +19,23 @@ type CreditCard struct {
 }
 
 func getRoot(w http.ResponseWriter, r *http.Request) {
-	reqDump, err := httputil.DumpRequest(r, true)
-	if err != nil {
+
+	var card CreditCard
+
+	body, _ := io.ReadAll(r.Body)
+
+	if err := json.Unmarshal([]byte(body), &card); err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("Validation Request:\n%s", string(reqDump))
+	fmt.Printf("Card Number: %s\nCard Holder's Name: %s\nExpiration Date: %s\nCCV: %s\n", card.CreditCardNumber, card.CardHolder, card.ExpirationDate, card.CCV)
+
+	// reqDump, err := httputil.DumpRequest(r, true)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// fmt.Printf("Validation Request:\n%s", string(reqDump))
 	io.WriteString(w, "Is Credit Card Number Valid? "+strconv.FormatBool(validate())+"\n")
 }
 

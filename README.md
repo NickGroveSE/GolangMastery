@@ -10,4 +10,4 @@ Create a Web Scraper that displays your top 4 favorite films and 4 most recent f
 
 <img src="/01_webscraper.png">
 
-### Project 2: Credit Card Validator (*Luhn's Algorithm, HTTP Requests*)
+### Project 2: Credit Card Validator (*Luhn's Algorithm, HTTP Server, Postman, JSON*)
