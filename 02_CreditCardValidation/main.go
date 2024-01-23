@@ -4,13 +4,27 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
+	"net/http/httputil"
 	"os"
 	"strconv"
 )
 
+type CreditCard struct {
+	CreditCardNumber string
+	CardHolder       string
+	ExpirationDate   string
+	CCV              string
+}
+
 func getRoot(w http.ResponseWriter, r *http.Request) {
-	fmt.Printf("Validation Request\n")
+	reqDump, err := httputil.DumpRequest(r, true)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("Validation Request:\n%s", string(reqDump))
 	io.WriteString(w, "Is Credit Card Number Valid? "+strconv.FormatBool(validate())+"\n")
 }
 
