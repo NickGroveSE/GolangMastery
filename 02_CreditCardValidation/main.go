@@ -7,7 +7,6 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"strconv"
 )
 
 type CreditCard struct {
@@ -17,9 +16,15 @@ type CreditCard struct {
 	CCV              string
 }
 
+type CreditCardValidation struct {
+	CreditCardNumber string
+	IsValid          bool
+}
+
 func getRoot(w http.ResponseWriter, r *http.Request) {
 
 	var card CreditCard
+	var cardValidation CreditCardValidation
 
 	body, _ := io.ReadAll(r.Body)
 
@@ -29,7 +34,14 @@ func getRoot(w http.ResponseWriter, r *http.Request) {
 	} else {
 		// fmt.Printf("Card Number: %s\nCard Holder's Name: %s\nExpiration Date: %s\nCCV: %s\n", card.CreditCardNumber, card.CardHolder, card.ExpirationDate, card.CCV)
 		fmt.Println("Validation Request Initialized...")
-		io.WriteString(w, "Is Credit Card Number Valid? "+strconv.FormatBool(validate(card.CreditCardNumber))+"\n")
+		io.WriteString(w, "Hi "+card.CardHolder+" Validation Complete\n")
+
+		cardValidation.CreditCardNumber = card.CreditCardNumber
+		cardValidation.IsValid = validate(card.CreditCardNumber)
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(cardValidation)
+
 	}
 
 }
