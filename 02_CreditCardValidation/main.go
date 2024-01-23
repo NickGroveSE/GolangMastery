@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -25,18 +24,14 @@ func getRoot(w http.ResponseWriter, r *http.Request) {
 	body, _ := io.ReadAll(r.Body)
 
 	if err := json.Unmarshal([]byte(body), &card); err != nil {
-		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("400 - Invalid JSON Request"))
+	} else {
+		// fmt.Printf("Card Number: %s\nCard Holder's Name: %s\nExpiration Date: %s\nCCV: %s\n", card.CreditCardNumber, card.CardHolder, card.ExpirationDate, card.CCV)
+		fmt.Println("Validation Request Initialized...")
+		io.WriteString(w, "Is Credit Card Number Valid? "+strconv.FormatBool(validate(card.CreditCardNumber))+"\n")
 	}
 
-	fmt.Printf("Card Number: %s\nCard Holder's Name: %s\nExpiration Date: %s\nCCV: %s\n", card.CreditCardNumber, card.CardHolder, card.ExpirationDate, card.CCV)
-
-	// reqDump, err := httputil.DumpRequest(r, true)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// fmt.Printf("Validation Request:\n%s", string(reqDump))
-	io.WriteString(w, "Is Credit Card Number Valid? "+strconv.FormatBool(validate())+"\n")
 }
 
 func main() {
