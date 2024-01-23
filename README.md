@@ -12,6 +12,6 @@ Create a Web Scraper that displays your top 4 favorite films and 4 most recent f
 
 ### Project 2: Credit Card Validator (*Luhn's Algorithm, HTTP Server, Postman, JSON*)
 
-Using Luhn's Algorithm I needed to validate entry errors with credit card numbers and set up this functionality as a microservice. It felt like I layed a lot of good ground work for my future in Go with this project by being exposed to a lot of new syntax, working with http requests, and handling JSON data.
+Using Luhn's Algorithm, I needed to validate entry errors with credit card numbers and set up this functionality as a microservice. It felt like I layed some good ground work for my future in Go with this project by being exposed to a lot of new syntax, working with http requests, and handling JSON data.
 
 ### Project 3: Create a Pixel Art Editor
