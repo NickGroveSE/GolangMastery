@@ -15,4 +15,4 @@ Using Luhn's Algorithm, I needed to validate entry errors with credit card numbe
 ### Project 3: RESTful CRUD API (*Gin, MySQl, Gorm, Postman*)
 
 ##### Database Organization (Using QuickDB)
-<img src="/01_webscraper.png">
+<img src="/03_restapi_01.png">
