@@ -13,16 +13,20 @@ func SetupRoutes(db *gorm.DB) *gin.Engine {
 		c.Set("db", db)
 	})
 
+	// Test Routes
+	r.GET("/user/all", controllers.GetAllUsers)
+	r.GET("/brewery/all", controllers.GetAllBreweries)
+
 	// User Routes
-	r.GET("/users", controllers.GetAllUsers)
-	r.POST("/users", controllers.CreateUser)
-	r.GET("/users/:id", controllers.GetUser)
-	r.PATCH("/users/:id", controllers.EditUser)
-	r.DELETE("/users/:id", controllers.DeleteUser)
+	r.POST("/user", controllers.CreateUser)
+	r.GET("/user/:id", controllers.GetUser)
+	r.PATCH("/user/:id", controllers.EditUser)
+	r.DELETE("/user/:id", controllers.DeleteUser)
 
 	// Brewery Routes
-	r.GET("/breweries", controllers.GetAllBreweries)
-	r.POST("/breweries", controllers.CreateBrewery)
+	r.POST("/brewery", controllers.CreateBrewery)
+	r.GET("/brewery/:id", controllers.GetBrewery)
+	r.PATCH("/brewery/:id", controllers.EditBrewery)
 
 	return r
 }

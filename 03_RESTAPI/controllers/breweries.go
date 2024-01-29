@@ -29,7 +29,7 @@ func CreateBrewery(c *gin.Context) {
 
 	var instance BreweryInstance
 	if err := c.ShouldBindJSON(&instance); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"Error": err.Error()})
 		return
 	}
 
@@ -49,18 +49,59 @@ func CreateBrewery(c *gin.Context) {
 
 func GetBrewery(c *gin.Context) {
 
-	// Code
+	db := c.MustGet("db").(*gorm.DB)
+	var brewery models.Brewery
+
+	if err := db.Where("id = ?", c.Param("id")).Find(&brewery).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"Error": "No Brewery Found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": brewery})
 
 }
 
 func EditBrewery(c *gin.Context) {
 
-	// Code
+	db := c.MustGet("db").(*gorm.DB)
+	var brewery models.Brewery
+
+	if err := db.Where("id = ?", c.Param("id")).Find(&brewery).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"Error": "No Brewery Found"})
+		return
+	}
+
+	var instance BreweryInstance
+	if err := c.ShouldBindJSON(&instance); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"Error": err.Error()})
+		return
+	}
+
+	updatingBrewery := models.Brewery{
+		ID:          instance.ID,
+		Name:        instance.Name,
+		BreweryType: instance.BreweryType,
+		Location:    instance.Location,
+	}
+
+	db.Model(&brewery).Updates(updatingBrewery)
+
+	c.JSON(http.StatusOK, gin.H{"data": brewery})
 
 }
 
 func DeleteBrewery(c *gin.Context) {
 
-	// Code
+	db := c.MustGet("db").(*gorm.DB)
+	var brewery models.Brewery
+
+	if err := db.Where("id = ?", c.Param("id")).First(&brewery).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"Error": "No Brewery Found"})
+		return
+	}
+
+	db.Delete(&brewery)
+
+	c.JSON(http.StatusOK, gin.H{"data": true})
 
 }
